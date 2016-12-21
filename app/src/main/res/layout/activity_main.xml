@@ -14,6 +14,6 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="First Commit, Project Starting...Alex joined"
+        android:text="Ήρθαμε σκαστοί από την κλινική, ΠΑΟΚΑΡΑ μου δεν το ξέρουν οι γιατροί!"
         />
 </RelativeLayout>
