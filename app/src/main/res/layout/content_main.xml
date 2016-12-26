@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     android:id="@+id/content_main"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
@@ -14,8 +15,214 @@
     tools:context="com.aresproductions.flightbookingapp.MainActivity"
     tools:showIn="@layout/activity_main">
 
-    <TextView
-        android:layout_width="wrap_content"
+    //trip_mode_cardview block #1
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Ready for Development!"/>
-</RelativeLayout>
+        android:orientation="horizontal">
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:id="@+id/trip_mode_oneway"
+                android:layout_weight="1"
+                android:layout_marginRight="3dp"
+                android:clickable="true"
+                app:cardUseCompatPadding="true"
+                >
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="ONEWAY"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    />
+
+
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:id="@+id/trip_roundtrip"
+                android:layout_weight="1"
+                android:layout_marginLeft="3dp"
+                android:clickable="true"
+                app:cardUseCompatPadding="true"
+                >
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="ROUNDTRIP"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    />
+
+
+            </android.support.v7.widget.CardView>
+
+    </LinearLayout>
+
+    //search_cardview block #2
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:id="@+id/search_cardview"
+        app:cardUseCompatPadding="true"
+        >
+
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="8dp">
+
+            <Button
+                android:layout_width="48dp"
+                android:layout_height="78dp"
+                android:id="@+id/swap_button"
+                android:background="@drawable/swap_button"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="16dp" />
+            //2 search views
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                >
+
+                <SearchView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/search_departure"
+                    android:queryHint="Departing From"
+                    android:iconifiedByDefault="false"
+                    android:paddingRight="16dp"></SearchView>
+
+                <SearchView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/search_destination"
+                    android:queryHint="Flying to"
+                    android:iconifiedByDefault="false"
+                    android:paddingRight="16dp"></SearchView>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+    //calendar_cardview block #3
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:id="@+id/calendar_cardview"
+        app:cardUseCompatPadding="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        //departure_date_layout
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:clickable="true"
+            android:id="@+id/departure_date_view"
+            android:layout_weight="1">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                android:text="Sun, Dec 18"
+                />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/calendar_button"
+                android:layout_gravity="center_vertical"
+                android:padding="8dp"/>
+
+        </LinearLayout>
+
+        //Divider between 2 calendar layouts
+        <View
+            android:layout_width="2dp"
+            android:layout_height="match_parent"
+            android:background="#F3F4F4"
+            ></View>
+
+        //arrive_date_layout
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:clickable="true"
+            android:id="@+id/arrive_date_view"
+            android:layout_weight="1">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                android:text="Sun, Dec 18"
+                />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/calendar_button"
+                android:layout_gravity="center_vertical"
+                android:padding="8dp"/>
+
+        </LinearLayout>
+
+
+
+    </LinearLayout>
+
+
+    </android.support.v7.widget.CardView>
+
+    //blocks #4a and #4b inside the layout
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        //business_class_block #4a
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="6dp"
+            android:layout_weight="1"
+            android:id="@+id/businessclass_cardview"
+            app:cardUseCompatPadding="true">
+
+
+            //Need to add values
+            <Spinner
+                android:id="@+id/spinner1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:spinnerMode="dropdown"
+                android:layout_gravity="center"
+                />
+
+        </android.support.v7.widget.CardView>
+        //number_of_passengers block #4b
+
+
+    </LinearLayout>
+
+
+
+</LinearLayout>
