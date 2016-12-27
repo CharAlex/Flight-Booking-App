@@ -13,7 +13,8 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.aresproductions.flightbookingapp.MainActivity"
-    tools:showIn="@layout/activity_main">
+    tools:showIn="@layout/activity_main"
+    android:background="@drawable/flight_bacgkround">
 
     <!--trip_mode_cardview block #1-->
 
@@ -200,7 +201,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="horizontal">
 
         <!--business_class_block #4a-->
@@ -211,7 +212,8 @@
             android:layout_height="48dp"
             android:layout_marginTop="6dp"
             android:layout_weight="1"
-            app:cardUseCompatPadding="true">
+            app:cardUseCompatPadding="true"
+            android:layout_marginRight="3dp">
 
 
             <!--Need to add values-->
@@ -223,10 +225,103 @@
                 android:spinnerMode="dropdown"/>
 
         </android.support.v7.widget.CardView>
+
         <!--number_of_passengers block #4b-->
+        <android.support.v7.widget.CardView
+            android:id="@+id/passengers_cardview"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="6dp"
+            android:layout_weight="1"
+            app:cardUseCompatPadding="true"
+            android:clickable="true"
+            android:layout_marginLeft="3dp"
+            >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/num_of_adults"
+                    android:layout_gravity="center_vertical"
+                    android:text="1"
+                    android:layout_marginLeft="16dp"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/adult"
+                    android:layout_marginLeft="6dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/num_of_children"
+                    android:text="0"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="16dp"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/children"
+                    android:layout_marginLeft="6dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/num_of_infants"
+                    android:text="0"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="16dp"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/infants"
+                    android:layout_marginLeft="6dp"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/down"
+                    android:layout_marginLeft="6dp"
+                    android:layout_marginRight="6dp"/>
+
+
+            </LinearLayout>
+
+
+        </android.support.v7.widget.CardView>
 
 
     </LinearLayout>
+
+    <!--search_button #5 -->
+    <android.support.v7.widget.CardView
+        android:id="@+id/search_button_cardview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        app:cardUseCompatPadding="true"
+        >
+
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/search_button"
+            android:text="SEARCH"
+            android:background="#E79E23"
+            />
+
+    </android.support.v7.widget.CardView>
+
+
 
 
 </LinearLayout>
