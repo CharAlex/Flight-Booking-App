@@ -38,24 +38,9 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        //All in a method
-        departureDateText = (TextView) findViewById(R.id.departure_text);
-        arrivalDateText = (TextView) findViewById(R.id.arrival_text);
+        showCalendars();
+        showSpinnerWithTravelClasses();
 
-        final Calendar c = Calendar.getInstance();
-        year_x = c.get(Calendar.YEAR);
-        month_x = c.get(Calendar.MONTH);
-        day_x = c.get(Calendar.DAY_OF_MONTH);
-        showDialogOnLayoutClick();
-
-        Spinner spinner = (Spinner) findViewById(R.id.spinner1);
-        // Create an ArrayAdapter using the string array and a default spinner layout
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                R.array.travel_class, android.R.layout.simple_spinner_item);
-        // Specify the layout to use when the list of choices appears
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        // Apply the adapter to the spinner
-        spinner.setAdapter(adapter);
     }
 
 
@@ -66,10 +51,8 @@ public class MainActivity extends AppCompatActivity {
                 new View.OnClickListener(){
                     @Override
                     public void onClick(View v) {
-
                         isDeparture = true;
                         showDialog(DIALOG_ID);
-
                     }
                 }
         );
@@ -80,7 +63,6 @@ public class MainActivity extends AppCompatActivity {
                     public void onClick(View v) {
                         isDeparture = false;
                         showDialog(DIALOG_ID);
-
                     }
                 }
         );
@@ -105,9 +87,6 @@ public class MainActivity extends AppCompatActivity {
             }else{
                 arrivalDateText.setText(date);
             }
-
-
-
             Toast.makeText(MainActivity.this,date,Toast.LENGTH_SHORT).show();
         }
 
@@ -146,6 +125,34 @@ public class MainActivity extends AppCompatActivity {
         //dateText.setText("Bla bla");
 
     }*/
+
+    public void showCalendars(){
+        departureDateText = (TextView) findViewById(R.id.departure_text);
+        arrivalDateText = (TextView) findViewById(R.id.arrival_text);
+
+        final Calendar c = Calendar.getInstance();
+        year_x = c.get(Calendar.YEAR);
+        month_x = c.get(Calendar.MONTH);
+        day_x = c.get(Calendar.DAY_OF_MONTH);
+
+        //Show the current date
+        String date = day_x + "/" + (month_x+1) + "/" + year_x;
+        departureDateText.setText(date);
+        arrivalDateText.setText(date);
+
+        showDialogOnLayoutClick();
+    }
+
+    public void showSpinnerWithTravelClasses(){
+        Spinner spinner = (Spinner) findViewById(R.id.spinner1);
+        // Create an ArrayAdapter using the string array and a default spinner layout
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.travel_class, android.R.layout.simple_spinner_item);
+        // Specify the layout to use when the list of choices appears
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // Apply the adapter to the spinner
+        spinner.setAdapter(adapter);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

@@ -129,8 +129,7 @@
                     android:id="@+id/departure_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="16dp"
-                    android:text="Sun, Dec 18"/>
+                    android:padding="16dp" />
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -164,8 +163,7 @@
                     android:id="@+id/arrival_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="16dp"
-                    android:text="Sun, Dec 18"/>
+                    android:padding="16dp" />
 
                 <ImageView
                     android:layout_width="wrap_content"
