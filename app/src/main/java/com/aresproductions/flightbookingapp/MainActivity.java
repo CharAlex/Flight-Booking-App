@@ -1,16 +1,130 @@
 package com.aresproductions.flightbookingapp;
 
+import android.app.DatePickerDialog;
+import android.app.Dialog;
+import android.app.FragmentTransaction;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import java.util.Calendar;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.PersistableBundle;
+import android.support.annotation.RequiresApi;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.DatePicker;
+import android.widget.LinearLayout;
+import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import static android.R.attr.id;
+
 
 public class MainActivity extends AppCompatActivity {
+
+    TextView departureDateText;
+    TextView arrivalDateText;
+
+    LinearLayout departure;
+    LinearLayout arrival;
+
+    int day_x, month_x, year_x;
+    static final int DIALOG_ID = 0;
+
+    public void showDialogOnLayoutClick(){
+        departure = (LinearLayout) findViewById(R.id.departure_date_view);
+        arrival = (LinearLayout) findViewById(R.id.arrive_date_view);
+        departure.setOnClickListener(
+                new View.OnClickListener(){
+                    @Override
+                    public void onClick(View v) {
+                        showDialog(DIALOG_ID);
+
+                    }
+                }
+        );
+
+        arrival.setOnClickListener(
+                new View.OnClickListener(){
+                    @Override
+                    public void onClick(View v) {
+                        showDialog(DIALOG_ID);
+
+                    }
+                }
+        );
+    }
+
+    @Override
+    protected Dialog onCreateDialog(int id) {
+        if (id==DIALOG_ID)
+            return new DatePickerDialog(this,dpickerListener,year_x, month_x, day_x);
+        return null;
+    }
+
+    private DatePickerDialog.OnDateSetListener dpickerListener = new DatePickerDialog.OnDateSetListener(){
+
+        public void onDateSet(DatePicker view, int year, int month, int day) {
+            year_x = year;
+            month_x = month+1;
+            day_x = day;
+            String date = day_x + "/" + month_x + "/" + year_x;
+            if(view.getId() == R.id.departure_date_view){
+                departureDateText.setText(date);
+            }else if (view.getId() == R.id.arrive_date_view){
+                arrivalDateText.setText(date);
+            }
+
+
+
+            Toast.makeText(MainActivity.this,date,Toast.LENGTH_SHORT).show();
+        }
+
+    };
+
+    /*public static class DatePickerFragment extends DialogFragment
+            implements DatePickerDialog.OnDateSetListener {
+
+        //TextView dateText;
+
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            // Use the current date as the default date in the picker
+            final Calendar c = Calendar.getInstance();
+            int year = c.get(Calendar.YEAR);
+            int month = c.get(Calendar.MONTH);
+            int day = c.get(Calendar.DAY_OF_MONTH);
+
+            // Create a new instance of DatePickerDialog and return it
+            return new DatePickerDialog(getActivity(), this, year, month, day);
+        }
+
+        public void onDateSet(DatePicker view, int year, int month, int day) {
+            String date = day + "/" + (month + 1) + "/" + year;
+            //dateText.setText(date);
+            Toast.makeText(getContext(), date, Toast.LENGTH_LONG).show();
+
+
+        }
+    }
+
+
+    public void showDatePickerDialog(View v) {
+        DialogFragment newFragment = new DatePickerFragment();
+        newFragment.show(getSupportFragmentManager(), "datePicker");
+        //dateText.setText("Bla bla");
+
+    }*/
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,6 +132,23 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        departureDateText = (TextView) findViewById(R.id.departure_text);
+        arrivalDateText = (TextView) findViewById(R.id.arrival_text);
+
+        final Calendar c = Calendar.getInstance();
+        year_x = c.get(Calendar.YEAR);
+        month_x = c.get(Calendar.MONTH);
+        day_x = c.get(Calendar.DAY_OF_MONTH);
+        showDialogOnLayoutClick();
+
+        Spinner spinner = (Spinner) findViewById(R.id.spinner1);
+        // Create an ArrayAdapter using the string array and a default spinner layout
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.travel_class, android.R.layout.simple_spinner_item);
+        // Specify the layout to use when the list of choices appears
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // Apply the adapter to the spinner
+        spinner.setAdapter(adapter);
     }
 
     @Override

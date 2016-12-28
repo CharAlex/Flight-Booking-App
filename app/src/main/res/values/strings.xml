@@ -1,4 +1,11 @@
 <resources>
     <string name="app_name">Flight Booking App</string>
     <string name="action_settings">Settings</string>
+
+    <string-array name="travel_class">
+        <item>Economy</item>
+        <item>Premium Economy</item>
+        <item>Business Class</item>
+        <item>First Class</item>
+    </string-array>
 </resources>
