@@ -70,8 +70,11 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected Dialog onCreateDialog(int id) {
+        DatePickerDialog picker = new DatePickerDialog(this,datePickerListener,year_x, month_x, day_x);
+        picker.getDatePicker().setMinDate(System.currentTimeMillis()-1000);
+
         if (id==DIALOG_ID)
-            return new DatePickerDialog(this,datePickerListener,year_x, month_x, day_x);
+            return picker;
         return null;
     }
 
