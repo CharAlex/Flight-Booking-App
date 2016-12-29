@@ -54,8 +54,55 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
         setSpinnerData(R.id.spinner_children,R.array.num_of_passengers);
         setSpinnerData(R.id.spinner_infant,R.array.num_of_passengers);
 
+        setupAutocompleteTextViews();
+
+
     }
 
+
+    private void setupAutocompleteTextViews(){
+        departureAutoComplete = (AutoCompleteTextView) findViewById(R.id.search_departure);
+        departureAutoComplete.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                if(!departureAutoComplete.getText().toString().equals("")){
+                    AirportAutocompleteAsync asyncTask = new AirportAutocompleteAsync();
+                    asyncTask.delegate = MainActivity.this;
+                    asyncTask.execute(departureAutoComplete.getText().toString());
+                }
+            }
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+        destinationAutoComplete = (AutoCompleteTextView) findViewById(R.id.search_destination);
+        destinationAutoComplete.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                if(!destinationAutoComplete.getText().toString().equals("")){
+                    AirportAutocompleteAsync asyncTask = new AirportAutocompleteAsync();
+                    asyncTask.delegate = MainActivity.this;
+                    asyncTask.execute(destinationAutoComplete.getText().toString());
+                }
+            }
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+    }
 
     public void showDialogOnLayoutClick(){
         departure = (LinearLayout) findViewById(R.id.departure_date_view);
