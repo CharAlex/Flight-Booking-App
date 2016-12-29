@@ -39,7 +39,11 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         showCalendars();
-        showSpinnerWithTravelClasses();
+        //Get the entries for spinners
+        setSpinnerData(R.id.spinner1,R.array.travel_class);
+        setSpinnerData(R.id.spinner_adult,R.array.num_of_passengers);
+        setSpinnerData(R.id.spinner_children,R.array.num_of_passengers);
+        setSpinnerData(R.id.spinner_infant,R.array.num_of_passengers);
 
     }
 
@@ -143,11 +147,13 @@ public class MainActivity extends AppCompatActivity {
         showDialogOnLayoutClick();
     }
 
-    public void showSpinnerWithTravelClasses(){
-        Spinner spinner = (Spinner) findViewById(R.id.spinner1);
+    public void setSpinnerData(int spinner_id, int array_name){
+        Spinner spinner = (Spinner) findViewById(spinner_id);
         // Create an ArrayAdapter using the string array and a default spinner layout
+
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                R.array.travel_class, android.R.layout.simple_spinner_item);
+                array_name, android.R.layout.simple_spinner_item);
+
         // Specify the layout to use when the list of choices appears
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // Apply the adapter to the spinner
