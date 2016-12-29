@@ -47,93 +47,35 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        showCalendars();
+        //Get the entries for spinners
+        setSpinnerData(R.id.spinner1,R.array.travel_class);
+        setSpinnerData(R.id.spinner_adult,R.array.num_of_passengers);
+        setSpinnerData(R.id.spinner_children,R.array.num_of_passengers);
+        setSpinnerData(R.id.spinner_infant,R.array.num_of_passengers);
 
-        //All in a method
-        departureDateText = (TextView) findViewById(R.id.departure_text);
-        arrivalDateText = (TextView) findViewById(R.id.arrival_text);
-
-        final Calendar c = Calendar.getInstance();
-        year_x = c.get(Calendar.YEAR);
-        month_x = c.get(Calendar.MONTH);
-        day_x = c.get(Calendar.DAY_OF_MONTH);
-        showDialogOnLayoutClick();
-
-        Spinner spinner = (Spinner) findViewById(R.id.spinner1);
-        // Create an ArrayAdapter using the string array and a default spinner layout
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                R.array.travel_class, android.R.layout.simple_spinner_item);
-        // Specify the layout to use when the list of choices appears
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        // Apply the adapter to the spinner
-        spinner.setAdapter(adapter);
-
-
-        departureAutoComplete = (AutoCompleteTextView) findViewById(R.id.search_departure);
-        departureAutoComplete.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-                if(!departureAutoComplete.getText().toString().equals("")){
-                    AirportAutocompleteAsync asyncTask = new AirportAutocompleteAsync();
-                    asyncTask.delegate = MainActivity.this;
-                    asyncTask.execute(departureAutoComplete.getText().toString());
-                }
-            }
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });
-
-        destinationAutoComplete = (AutoCompleteTextView) findViewById(R.id.search_destination);
-        destinationAutoComplete.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-                if(!destinationAutoComplete.getText().toString().equals("")){
-                    AirportAutocompleteAsync asyncTask = new AirportAutocompleteAsync();
-                    asyncTask.delegate = MainActivity.this;
-                    asyncTask.execute(destinationAutoComplete.getText().toString());
-                }
-            }
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });
     }
 
 
-    public void showDialogOnLayoutClick() {
+    public void showDialogOnLayoutClick(){
         departure = (LinearLayout) findViewById(R.id.departure_date_view);
         arrival = (LinearLayout) findViewById(R.id.arrive_date_view);
         departure.setOnClickListener(
-                new View.OnClickListener() {
+                new View.OnClickListener(){
                     @Override
                     public void onClick(View v) {
-
                         isDeparture = true;
                         showDialog(DIALOG_ID);
-
                     }
                 }
         );
 
         arrival.setOnClickListener(
-                new View.OnClickListener() {
+                new View.OnClickListener(){
                     @Override
                     public void onClick(View v) {
                         isDeparture = false;
                         showDialog(DIALOG_ID);
-
                     }
                 }
         );
@@ -141,24 +83,27 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
 
     @Override
     protected Dialog onCreateDialog(int id) {
-        if (id == DIALOG_ID)
-            return new DatePickerDialog(this, datePickerListener, year_x, month_x, day_x);
+        DatePickerDialog picker = new DatePickerDialog(this,datePickerListener,year_x, month_x, day_x);
+        picker.getDatePicker().setMinDate(System.currentTimeMillis()-1000);
+
+        if (id==DIALOG_ID)
+            return picker;
         return null;
     }
 
-    private DatePickerDialog.OnDateSetListener datePickerListener = new DatePickerDialog.OnDateSetListener() {
+    private DatePickerDialog.OnDateSetListener datePickerListener = new DatePickerDialog.OnDateSetListener(){
 
         public void onDateSet(DatePicker view, int year, int month, int day) {
             year_x = year;
-            month_x = month + 1;
+            month_x = month+1;
             day_x = day;
             String date = day_x + "/" + month_x + "/" + year_x;
-            if (isDeparture) {
+            if(isDeparture){
                 departureDateText.setText(date);
-            } else {
+            }else{
                 arrivalDateText.setText(date);
             }
-            Toast.makeText(MainActivity.this, date, Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this,date,Toast.LENGTH_SHORT).show();
         }
 
     };
@@ -196,6 +141,36 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
         //dateText.setText("Bla bla");
 
     }*/
+
+    public void showCalendars(){
+        departureDateText = (TextView) findViewById(R.id.departure_text);
+        arrivalDateText = (TextView) findViewById(R.id.arrival_text);
+
+        final Calendar c = Calendar.getInstance();
+        year_x = c.get(Calendar.YEAR);
+        month_x = c.get(Calendar.MONTH);
+        day_x = c.get(Calendar.DAY_OF_MONTH);
+
+        //Show the current date
+        String date = day_x + "/" + (month_x+1) + "/" + year_x;
+        departureDateText.setText(date);
+        arrivalDateText.setText(date);
+
+        showDialogOnLayoutClick();
+    }
+
+    public void setSpinnerData(int spinner_id, int array_name){
+        Spinner spinner = (Spinner) findViewById(spinner_id);
+        // Create an ArrayAdapter using the string array and a default spinner layout
+
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                array_name, android.R.layout.simple_spinner_item);
+
+        // Specify the layout to use when the list of choices appears
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // Apply the adapter to the spinner
+        spinner.setAdapter(adapter);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
