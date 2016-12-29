@@ -86,7 +86,8 @@
                     android:dropDownVerticalOffset="5dp"
                     android:dropDownWidth="wrap_content"
                     android:completionThreshold="1"
-                    android:inputType="textAutoComplete|textAutoCorrect"/>
+                    android:inputType="textAutoComplete|textAutoCorrect"
+                    android:hint="Departure From"/>
 
 
                 <AutoCompleteTextView
@@ -97,7 +98,8 @@
                     android:dropDownVerticalOffset="5dp"
                     android:dropDownWidth="wrap_content"
                     android:completionThreshold="1"
-                    android:inputType="textAutoComplete|textAutoCorrect"/>
+                    android:inputType="textAutoComplete|textAutoCorrect"
+                    android:hint="Flying to"/>
 
             </LinearLayout>
 
@@ -185,23 +187,14 @@
 
     </android.support.v7.widget.CardView>
 
-    <!--blocks #4a and #4b inside the layout-->
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <!--business_class_block #4a-->
+        <!--business_class_block #4-->
 
         <android.support.v7.widget.CardView
             android:id="@+id/businessclass_cardview"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:layout_marginTop="6dp"
-            android:layout_weight="2.5"
-            app:cardUseCompatPadding="true"
-            android:layout_marginRight="3dp">
+            app:cardUseCompatPadding="true">
 
 
             <!--Need to add values-->
@@ -214,7 +207,44 @@
 
         </android.support.v7.widget.CardView>
 
-        <!--number_of_passengers block #4b-->
+    <!--ADULTS_CHILDREN_INFANTS_TITLE-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="6dp">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="ADULTS"
+            android:textAlignment="center"
+            android:layout_weight="1"
+            android:textColor="#00A9A3"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="CHILDREN"
+            android:textAlignment="center"
+            android:textColor="#00A9A3"
+            android:layout_weight="1"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="INFANTS"
+            android:textAlignment="center"
+            android:textColor="#00A9A3"
+            android:layout_weight="1"/>
+
+    </LinearLayout>
+
+
+    <!--number_of_passengers block #5-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
         <!--adult_cardview-->
         <android.support.v7.widget.CardView
             android:id="@+id/adult_cardview"
@@ -224,30 +254,28 @@
             android:layout_weight="3"
             app:cardUseCompatPadding="true"
             android:clickable="true"
-            android:layout_marginLeft="3dp"
             >
             <!--adult_spinner-->
             <LinearLayout
                 android:layout_width="match_parent"
-                android:orientation="horizontal"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/adult"
-                    android:layout_marginLeft="4dp"/>
-
-                <Spinner
-                    android:id="@+id/spinner_adult"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:spinnerMode="dropdown">
-
-                </Spinner>
-
+                android:orientation="horizontal">
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/adult"
+                        android:padding="4dp"/>
+                    <Spinner
+                        android:id="@+id/spinner_adult"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:textAlignment="center"
+                        android:layout_weight="1"
+                        android:spinnerMode="dropdown"
+                        >
+                    </Spinner>
             </LinearLayout>
+
 
 
         </android.support.v7.widget.CardView>
@@ -266,22 +294,22 @@
             <!--children_spinner-->
             <LinearLayout
                 android:layout_width="match_parent"
-                android:orientation="horizontal"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center">
-
-
+                android:orientation="horizontal">
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/children"
-                    android:layout_marginLeft="4dp"/>
+                    android:padding="4dp"/>
+
 
                 <Spinner
                     android:id="@+id/spinner_children"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:spinnerMode="dropdown">
+                    android:spinnerMode="dropdown"
+                    android:layout_gravity="center_horizontal"
+                    android:textAlignment="center">
 
                 </Spinner>
 
@@ -300,34 +328,32 @@
             android:clickable="true"
             android:layout_marginLeft="3dp"
             >
-            <!--infant_spinner-->
             <LinearLayout
                 android:layout_width="match_parent"
-                android:orientation="horizontal"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/infants"
-                    android:layout_marginLeft="4dp"/>
-
+                android:orientation="horizontal">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/infants"
+                android:padding="4dp"/>
+            <!--infant_spinner-->
                 <Spinner
                     android:id="@+id/spinner_infant"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:spinnerMode="dropdown">
+                    android:layout_gravity="center"
+                    android:spinnerMode="dropdown"
+                    android:textAlignment="center">
 
                 </Spinner>
-
             </LinearLayout>
-
         </android.support.v7.widget.CardView>
 
     </LinearLayout>
 
-    <!--search_button #5 -->
+
+    <!--search_button #6 -->
     <android.support.v7.widget.CardView
         android:id="@+id/search_button_cardview"
         android:layout_width="match_parent"
