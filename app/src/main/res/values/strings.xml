@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Flight Booking App</string>
+    <string name="app_name">Flight Booking</string>
     <string name="action_settings">Settings</string>
 
     <string-array name="travel_class">

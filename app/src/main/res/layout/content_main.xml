@@ -86,7 +86,7 @@
                     android:dropDownVerticalOffset="5dp"
                     android:dropDownWidth="wrap_content"
                     android:completionThreshold="1"
-                    android:inputType="textAutoComplete|textAutoCorrect"
+                    android:inputType="textNoSuggestions"
                     android:hint="Departure From"/>
 
 
@@ -98,7 +98,7 @@
                     android:dropDownVerticalOffset="5dp"
                     android:dropDownWidth="wrap_content"
                     android:completionThreshold="1"
-                    android:inputType="textAutoComplete|textAutoCorrect"
+                    android:inputType="textNoSuggestions"
                     android:hint="Flying to"/>
 
             </LinearLayout>
