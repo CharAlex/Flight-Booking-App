@@ -14,6 +14,8 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import static com.aresproductions.flightbookingapp.BuildConfig.OPEN_WEATHER_MAP_API_KEY;
+
 /**
  * Created by Ares on 28-Dec-16.
  */
@@ -33,23 +35,7 @@ public class AirportAutocompleteAsync extends AsyncTask<String, Void, String[]> 
     }
 
 
-    private String[] getAirportDataFromJson(String airportsJsonStr) throws JSONException {
-        // These are the names of the JSON objects that need to be extracted.
-        final String AIRPORT_VALUE = "value";
-        final String AIRPORT_LABEL = "label";
 
-
-        JSONArray airportsJsonArray = new JSONArray(airportsJsonStr);
-        String[] resutlsStr = new String[airportsJsonArray.length()];
-
-        for (int i = 0; i < airportsJsonArray.length(); i++) {
-            resutlsStr[i] = airportsJsonArray.getJSONObject(i).getString(AIRPORT_LABEL);
-
-        }
-
-        return resutlsStr;
-
-    }
 
     @Override
     protected String[] doInBackground(String... strings) {
@@ -77,7 +63,7 @@ public class AirportAutocompleteAsync extends AsyncTask<String, Void, String[]> 
             final String apiKeyParam = "apikey";
 
             Uri builtUri = Uri.parse(baseUrl).buildUpon()
-                    .appendQueryParameter(apiKeyParam, "dw1DaSWsRPjxns6OZ8Z8753LIWAoIFlY")
+                    .appendQueryParameter(apiKeyParam, OPEN_WEATHER_MAP_API_KEY)
                     .appendQueryParameter(queryParamTerm, strings[0])
                     .build();
 
@@ -142,6 +128,24 @@ public class AirportAutocompleteAsync extends AsyncTask<String, Void, String[]> 
         return null;
     }
 
+    //Processing Data from JSON File
+    private String[] getAirportDataFromJson(String airportsJsonStr) throws JSONException {
+        // These are the names of the JSON objects that need to be extracted.
+        final String AIRPORT_VALUE = "value";
+        final String AIRPORT_LABEL = "label";
+
+
+        JSONArray airportsJsonArray = new JSONArray(airportsJsonStr);
+        String[] resutlsStr = new String[airportsJsonArray.length()];
+
+        for (int i = 0; i < airportsJsonArray.length(); i++) {
+            resutlsStr[i] = airportsJsonArray.getJSONObject(i).getString(AIRPORT_LABEL);
+
+        }
+
+        return resutlsStr;
+
+    }
 
 }
 
