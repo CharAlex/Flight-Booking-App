@@ -272,6 +272,8 @@
                         android:textAlignment="center"
                         android:layout_weight="1"
                         android:spinnerMode="dropdown"
+                        android:padding="2dp"
+
                         >
                     </Spinner>
             </LinearLayout>
@@ -289,7 +291,6 @@
             android:layout_weight="3"
             app:cardUseCompatPadding="true"
             android:clickable="true"
-            android:layout_marginLeft="3dp"
             >
             <!--children_spinner-->
             <LinearLayout
@@ -309,7 +310,8 @@
                     android:layout_height="match_parent"
                     android:spinnerMode="dropdown"
                     android:layout_gravity="center_horizontal"
-                    android:textAlignment="center">
+                    android:textAlignment="center"
+                    android:padding="2dp">
 
                 </Spinner>
 
@@ -326,7 +328,6 @@
             android:layout_weight="3"
             app:cardUseCompatPadding="true"
             android:clickable="true"
-            android:layout_marginLeft="3dp"
             >
             <LinearLayout
                 android:layout_width="match_parent"
@@ -344,7 +345,8 @@
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
                     android:spinnerMode="dropdown"
-                    android:textAlignment="center">
+                    android:textAlignment="center"
+                    android:padding="2dp">
 
                 </Spinner>
             </LinearLayout>

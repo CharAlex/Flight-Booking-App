@@ -3,6 +3,7 @@ package com.aresproductions.flightbookingapp;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
@@ -12,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
@@ -39,7 +41,6 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
 
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,6 +56,22 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
         setSpinnerData(R.id.spinner_infant,R.array.num_of_passengers);
 
         setupAutocompleteTextViews();
+
+        //Swap button (destination,departure)
+        Button swap_button = (Button) findViewById(R.id.swap_button);
+        swap_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                departureAutoComplete = (AutoCompleteTextView) findViewById(R.id.search_departure);
+                destinationAutoComplete = (AutoCompleteTextView) findViewById(R.id.search_destination);
+                String search_temp = destinationAutoComplete.getText().toString();
+                destinationAutoComplete.setText(departureAutoComplete.getText());
+                departureAutoComplete.setText(search_temp);
+
+
+            }
+        });
+
 
 
     }
