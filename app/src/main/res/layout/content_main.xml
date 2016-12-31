@@ -29,7 +29,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                style="@style/AppTheme.CustomButton"
+                style="@style/AppTheme.Button"
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:text="ONEWAY"/>

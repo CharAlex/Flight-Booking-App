@@ -7,8 +7,8 @@
         <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
 
-    <style name="AppTheme.CustomButton" parent="Widget.AppCompat.Button.Colored">
-        <item name="android:colorButtonNormal">@color/colorWhite</item>
+    <style name="AppTheme.CustomButton" parent="Base.Widget.AppCompat.Button.Colored">
+        <item name="android:backgroundTint">@color/colorWhite</item>
         <item name="android:textColor">@color/colorBlack</item>
     </style>
 
