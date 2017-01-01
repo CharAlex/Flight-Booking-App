@@ -120,6 +120,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
+            android:id="@+id/calendar_layout"
             android:layout_height="wrap_content">
 
             <!--departure_date_layout-->
@@ -153,6 +154,7 @@
 
             <View
                 android:layout_width="2dp"
+                android:id="@+id/calendar_divider"
                 android:layout_height="match_parent"
                 android:background="#F3F4F4"
                 >

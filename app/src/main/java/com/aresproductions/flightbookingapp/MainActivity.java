@@ -5,9 +5,12 @@ import android.app.Dialog;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
+import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -238,10 +241,20 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
 
     public void oneWayOrRoundTrip(){
         Button oneWayButton = (Button) findViewById(R.id.one_way_button);
+        final View divider = findViewById(R.id.calendar_divider);
         oneWayButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 arrival.setVisibility(View.INVISIBLE);
+                divider.setVisibility(View.INVISIBLE);
+
+                CardView temp_cardview = (CardView) findViewById(R.id.calendar_cardview);
+                departure.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,temp_cardview.getHeight()));
+                departure.setPadding(0,0,0,18);
+                departure.setGravity(Gravity.CENTER);
+                LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,temp_cardview.getHeight());
+                param.setMargins(0,16,0,0);
+                temp_cardview.setLayoutParams(param);
             }
         });
 
@@ -250,6 +263,10 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
             @Override
             public void onClick(View v) {
                 arrival.setVisibility(View.VISIBLE);
+                departure.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,arrival.getHeight(),1));
+                departure.setPadding(0,0,0,0);
+                divider.setVisibility(View.VISIBLE);
+                arrival.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,arrival.getHeight(),1));
             }
         });
 
