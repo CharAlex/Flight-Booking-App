@@ -39,8 +39,6 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
     private AutoCompleteTextView destinationAutoComplete;
 
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,21 +56,9 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
         setupAutocompleteTextViews();
 
         //Swap button (destination,departure)
-        Button swap_button = (Button) findViewById(R.id.swap_button);
-        swap_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                departureAutoComplete = (AutoCompleteTextView) findViewById(R.id.search_departure);
-                destinationAutoComplete = (AutoCompleteTextView) findViewById(R.id.search_destination);
-                String search_temp = destinationAutoComplete.getText().toString();
-                destinationAutoComplete.setText(departureAutoComplete.getText());
-                departureAutoComplete.setText(search_temp);
-
-
-            }
-        });
-
-
+        swapButton();
+        //One way or Round Trip
+        oneWayOrRoundTrip();
 
     }
 
@@ -234,6 +220,39 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // Apply the adapter to the spinner
         spinner.setAdapter(adapter);
+    }
+
+    public void swapButton(){
+        Button swap_button = (Button) findViewById(R.id.swap_button);
+        swap_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                departureAutoComplete = (AutoCompleteTextView) findViewById(R.id.search_departure);
+                destinationAutoComplete = (AutoCompleteTextView) findViewById(R.id.search_destination);
+                String search_temp = destinationAutoComplete.getText().toString();
+                destinationAutoComplete.setText(departureAutoComplete.getText());
+                departureAutoComplete.setText(search_temp);
+            }
+        });
+    }
+
+    public void oneWayOrRoundTrip(){
+        Button oneWayButton = (Button) findViewById(R.id.one_way_button);
+        oneWayButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                arrival.setVisibility(View.INVISIBLE);
+            }
+        });
+
+        Button roundTripButton = (Button) findViewById(R.id.round_trip_button);
+        roundTripButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                arrival.setVisibility(View.VISIBLE);
+            }
+        });
+
     }
 
     @Override
