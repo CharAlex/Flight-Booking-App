@@ -20,7 +20,7 @@ import static com.aresproductions.flightbookingapp.BuildConfig.OPEN_WEATHER_MAP_
  * Created by Ares on 28-Dec-16.
  */
 
-public class AirportAutocompleteAsync extends AsyncTask<String, Void, String[]> {
+public class AirportAutocompleteAsync extends AsyncTask<String, Void, Airport[]> {
 
     private final String LOG_TAG = AirportAutocompleteAsync.class.getSimpleName();
 
@@ -29,8 +29,8 @@ public class AirportAutocompleteAsync extends AsyncTask<String, Void, String[]> 
 
 
     @Override
-    protected void onPostExecute(String[] strings) {
-        delegate.processFinish(strings);
+    protected void onPostExecute(Airport[] airports) {
+        delegate.processFinish(airports);
 
     }
 
@@ -38,7 +38,7 @@ public class AirportAutocompleteAsync extends AsyncTask<String, Void, String[]> 
 
 
     @Override
-    protected String[] doInBackground(String... strings) {
+    protected Airport[] doInBackground(String... strings) {
         Log.d("Json", "Process Started");
 
 
@@ -129,21 +129,21 @@ public class AirportAutocompleteAsync extends AsyncTask<String, Void, String[]> 
     }
 
     //Processing Data from JSON File
-    private String[] getAirportDataFromJson(String airportsJsonStr) throws JSONException {
+    private Airport[] getAirportDataFromJson(String airportsJsonStr) throws JSONException {
         // These are the names of the JSON objects that need to be extracted.
         final String AIRPORT_VALUE = "value";
         final String AIRPORT_LABEL = "label";
 
 
         JSONArray airportsJsonArray = new JSONArray(airportsJsonStr);
-        String[] resutlsStr = new String[airportsJsonArray.length()];
+        Airport[] resultsAirports = new Airport[airportsJsonArray.length()];
 
         for (int i = 0; i < airportsJsonArray.length(); i++) {
-            resutlsStr[i] = airportsJsonArray.getJSONObject(i).getString(AIRPORT_LABEL);
+            resultsAirports[i] = new Airport(airportsJsonArray.getJSONObject(i).getString(AIRPORT_LABEL), airportsJsonArray.getJSONObject(i).getString(AIRPORT_VALUE));
 
         }
 
-        return resutlsStr;
+        return resultsAirports;
 
     }
 

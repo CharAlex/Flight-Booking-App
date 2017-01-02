@@ -3,10 +3,8 @@ package com.aresproductions.flightbookingapp;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
-import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -295,10 +293,16 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
     }
 
     @Override
-    public void processFinish(String[] output) {
+    public void processFinish(Airport[] airports) {
         ArrayAdapter<String> adapterSearch;
+
+        String[] tempStrings = new String[airports.length];
+        for(int i = 0; i< airports.length;i++){
+            tempStrings[i] = airports[i].getLabel();
+        }
+
         adapterSearch = new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_1, output);
+                android.R.layout.simple_list_item_1, tempStrings);
 
         departureAutoComplete.setAdapter(adapterSearch);
         destinationAutoComplete.setAdapter(adapterSearch);
