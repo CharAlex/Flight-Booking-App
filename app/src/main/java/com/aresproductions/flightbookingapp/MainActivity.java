@@ -2,6 +2,7 @@ package com.aresproductions.flightbookingapp;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
@@ -25,6 +26,8 @@ import java.util.Calendar;
 
 
 public class MainActivity extends AppCompatActivity implements AsyncResponse {
+    private static final String TAG = "MainActivity";
+
 
     private TextView departureDateText;
     private TextView arrivalDateText;
@@ -38,6 +41,8 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
 
     private AutoCompleteTextView departureAutoComplete;
     private AutoCompleteTextView destinationAutoComplete;
+
+    private Button searchButton;
 
 
     @Override
@@ -54,6 +59,7 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
         setSpinnerData(R.id.spinner_children,R.array.num_of_passengers);
         setSpinnerData(R.id.spinner_infant,R.array.num_of_passengers);
 
+        //Autocomplete Functionality
         setupAutocompleteTextViews();
 
         //Swap button (destination,departure)
@@ -61,6 +67,20 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
         //One way or Round Trip
         oneWayOrRoundTrip();
 
+        //Search Button
+        setSearchButton();
+
+    }
+
+    private void setSearchButton() {
+        searchButton = (Button) findViewById(R.id.search_button);
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), FlightsRecyclerActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
 

@@ -17,4 +17,5 @@
         <item>5</item>
         <item>6</item>
     </string-array>
+    <string name="title_activity_flights_recycler">FlightsRecyclerActivity</string>
 </resources>
