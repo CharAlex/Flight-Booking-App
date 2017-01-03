@@ -28,7 +28,11 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 
 public class MainActivity extends AppCompatActivity implements AsyncResponse {
@@ -111,10 +115,66 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //Async Task for Flights
+                getInfoForFlightSearchAsync();
+
+                //Goes to Second Activity
                 Intent intent = new Intent(getApplicationContext(), FlightsRecyclerActivity.class);
                 startActivity(intent);
             }
         });
+    }
+
+    public void getInfoForFlightSearchAsync(){
+
+        //Get values from AutoComplete texts
+        String origin = departureAutoComplete.getText().toString().substring(departureAutoComplete.getText().length()-4,departureAutoComplete.getText().length()-1);
+        String destination = destinationAutoComplete.getText().toString().substring(destinationAutoComplete.getText().length()-4,destinationAutoComplete.getText().length()-1);
+
+        //Get values from calendars
+        String departure = departureDateText.getText().toString();
+        departure = departure.substring(6,10)+ "-" + departure.substring(3,5)+ "-" + departure.substring(0,2) ;
+
+        String returndate = arrivalDateText.getText().toString();
+        returndate =  returndate.substring(6,10)+ "-" + returndate.substring(3,5)+ "-" + returndate.substring(0,2) ;
+
+        //Get values from spinners
+        Spinner spinnerAdults = (Spinner) findViewById(R.id.spinner_adult);
+        String adults = spinnerAdults.getSelectedItem().toString();
+
+        Spinner spinnerChildren = (Spinner) findViewById(R.id.spinner_children);
+        String children = spinnerChildren.getSelectedItem().toString();
+
+        Spinner spinnerInfants = (Spinner) findViewById(R.id.spinner_infant);
+        String infants = spinnerInfants.getSelectedItem().toString();
+
+        Spinner spinnerClass = (Spinner) findViewById(R.id.spinner1);
+        String travel_class = spinnerClass.getSelectedItem().toString();
+
+        if(travel_class.equals("Economy")){
+            travel_class = "ECONOMY";
+        }else if (travel_class.equals("Premium Economy")){
+            travel_class = "PREMIUM_ECONOMY";
+        }else if (travel_class.equals("Business Class")){
+            travel_class = "BUSINESS";
+        }else if (travel_class.equals("First Class")){
+            travel_class = "FIRST";
+        }
+
+        //One way or Round trip ??? If it is One Way then......
+        RadioButton oneWayButton = (RadioButton) findViewById(R.id.one_way_button);
+        String oneWay = "false";
+        if(oneWayButton.isChecked()){
+            oneWay = "true";
+        }
+
+        //Async Task
+        FlightsSearchAsync asyncTask = new FlightsSearchAsync();
+        asyncTask.delegate = MainActivity.this;
+        asyncTask.execute(origin,
+                destination,departure,returndate,adults,children,infants,travel_class,oneWay);
+
+
     }
 
 
@@ -202,7 +262,18 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
             year_x = year;
             month_x = month+1;
             day_x = day;
-            String date = day_x + "/" + month_x + "/" + year_x;
+            String date;
+
+            if(month_x<10 && day_x<10){
+                date = "0"+day_x + "/" + "0"+month_x + "/" + year_x;
+            }else if(month_x<10){
+                date = day_x + "/" + "0"+month_x + "/" + year_x;
+            }else if(day_x<10){
+                date = "0"+day_x + "/" + month_x + "/" + year_x;
+            }else{
+                date = day_x + "/" + month_x + "/" + year_x;
+            }
+
             if(isDeparture){
                 departureDateText.setText(date);
             }else{
@@ -212,40 +283,6 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
         }
 
     };
-
-    /*public static class DatePickerFragment extends DialogFragment
-            implements DatePickerDialog.OnDateSetListener {
-
-        //TextView dateText;
-
-        @Override
-        public Dialog onCreateDialog(Bundle savedInstanceState) {
-            // Use the current date as the default date in the picker
-            final Calendar c = Calendar.getInstance();
-            int year = c.get(Calendar.YEAR);
-            int month = c.get(Calendar.MONTH);
-            int day = c.get(Calendar.DAY_OF_MONTH);
-
-            // Create a new instance of DatePickerDialog and return it
-            return new DatePickerDialog(getActivity(), this, year, month, day);
-        }
-
-        public void onDateSet(DatePicker view, int year, int month, int day) {
-            String date = day + "/" + (month + 1) + "/" + year;
-            //dateText.setText(date);
-            Toast.makeText(getContext(), date, Toast.LENGTH_LONG).show();
-
-
-        }
-    }
-
-
-    public void showDatePickerDialog(View v) {
-        DialogFragment newFragment = new DatePickerFragment();
-        newFragment.show(getSupportFragmentManager(), "datePicker");
-        //dateText.setText("Bla bla");
-
-    }*/
 
     public void showCalendars(){
         departureDateText = (TextView) findViewById(R.id.departure_text);
@@ -257,7 +294,16 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
         day_x = c.get(Calendar.DAY_OF_MONTH);
 
         //Show the current date
-        String date = day_x + "/" + (month_x+1) + "/" + year_x;
+        String date;
+        if(month_x<9 && day_x<10){
+            date = "0"+day_x + "/" + "0"+ (month_x+1) + "/" + year_x;
+        }else if(month_x<9){
+            date = day_x + "/" + "0"+ (month_x+1) + "/" + year_x;
+        }else if(day_x<10){
+            date = "0"+day_x + "/" +  (month_x+1) + "/" + year_x;
+        }else{
+            date = day_x + "/" +  (month_x+1) + "/" + year_x;
+        }
         departureDateText.setText(date);
         arrivalDateText.setText(date);
 

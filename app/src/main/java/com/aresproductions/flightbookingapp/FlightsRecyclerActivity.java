@@ -6,6 +6,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.widget.ArrayAdapter;
 
 public class FlightsRecyclerActivity extends AppCompatActivity {
 
@@ -49,11 +50,23 @@ public class FlightsRecyclerActivity extends AppCompatActivity {
     }
 
 
-
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
         // Save currently selected layout manager.
         super.onSaveInstanceState(savedInstanceState);
+    }
+
+
+    public void process_Finish(Flight[] flights) {
+        ArrayAdapter<String> adapterSearch;
+
+        String[] tempStrings = new String[flights.length];
+        for(int i = 0; i< flights.length;i++){
+            tempStrings[i] = flights[i].getPrice();
+        }
+
+        //mAdapter = new FlightsAdapter(tempStrings);
+
     }
 
 }
