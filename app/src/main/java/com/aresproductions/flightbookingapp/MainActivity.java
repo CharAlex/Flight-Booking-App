@@ -18,6 +18,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -55,7 +56,7 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
         showCalendars();
         //Get the entries for spinners
         setSpinnerData(R.id.spinner1,R.array.travel_class);
-        setSpinnerData(R.id.spinner_adult,R.array.num_of_passengers);
+        setSpinnerData(R.id.spinner_adult,R.array.num_of_adults);
         setSpinnerData(R.id.spinner_children,R.array.num_of_passengers);
         setSpinnerData(R.id.spinner_infant,R.array.num_of_passengers);
 
@@ -258,11 +259,14 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
     }
 
     public void oneWayOrRoundTrip(){
-        Button oneWayButton = (Button) findViewById(R.id.one_way_button);
+        final RadioButton oneWayButton = (RadioButton) findViewById(R.id.one_way_button);
+        final RadioButton roundTripButton = (RadioButton) findViewById(R.id.round_trip_button);
         final View divider = findViewById(R.id.calendar_divider);
         oneWayButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                oneWayButton.setChecked(true);
+                roundTripButton.setChecked(false);
                 arrival.setVisibility(View.INVISIBLE);
                 divider.setVisibility(View.INVISIBLE);
 
@@ -276,10 +280,12 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
             }
         });
 
-        Button roundTripButton = (Button) findViewById(R.id.round_trip_button);
+
         roundTripButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                oneWayButton.setChecked(false);
+                roundTripButton.setChecked(true);
                 arrival.setVisibility(View.VISIBLE);
                 departure.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,arrival.getHeight(),1));
                 departure.setPadding(0,0,0,0);

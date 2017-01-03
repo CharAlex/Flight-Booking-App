@@ -25,23 +25,22 @@
         android:weightSum="2">
 
 
-            <Button
+            <RadioButton
                 android:id="@+id/one_way_button"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                style="@style/AppTheme.Button"
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:text="ONEWAY"/>
 
 
-            <Button
+            <RadioButton
                 android:id="@+id/round_trip_button"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                style="@style/AppTheme.CustomButton"
+                android:checked="true"
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:text="ROUNDTRIP"/>
