@@ -26,7 +26,7 @@ import android.widget.TextView;
 /**
  * Provide views to RecyclerView with data from mDataSet.
  */
-public class FlightsAdapter<S> extends RecyclerView.Adapter<FlightsAdapter.ViewHolder> {
+public class FlightsAdapter extends RecyclerView.Adapter<FlightsAdapter.ViewHolder> {
     private static final String TAG = "FlightsAdapter";
 
     private String[] mDataSet; //data that we will show...
