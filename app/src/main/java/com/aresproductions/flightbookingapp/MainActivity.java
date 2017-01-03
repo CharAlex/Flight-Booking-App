@@ -245,7 +245,7 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
     }
 
     public void swapButton(){
-        Button swap_button = (Button) findViewById(R.id.swap_button);
+        final Button swap_button = (Button) findViewById(R.id.swap_button);
         swap_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -254,6 +254,7 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
                 String search_temp = destinationAutoComplete.getText().toString();
                 destinationAutoComplete.setText(departureAutoComplete.getText());
                 departureAutoComplete.setText(search_temp);
+                swap_button.setBackgroundResource(R.drawable.swap_button_animation);
             }
         });
     }
