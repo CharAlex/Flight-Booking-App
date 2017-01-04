@@ -6,17 +6,14 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.widget.ArrayAdapter;
+import android.util.Log;
 
-public class FlightsRecyclerActivity extends AppCompatActivity {
+public class FlightsRecyclerActivity extends AppCompatActivity implements  AsyncResponseFlight{
 
     private static final String TAG = "FlightsRecyclerActivity";
 
     protected RecyclerView mRecyclerView;
-    protected FlightsAdapter mAdapter;
     protected RecyclerView.LayoutManager mLayoutManager;
-
-    private String[] data = new String[50];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,9 +21,22 @@ public class FlightsRecyclerActivity extends AppCompatActivity {
         setContentView(R.layout.activity_flights_recycler);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        Bundle data = getIntent().getExtras();
+        SearchFlight searchFlight = data.getParcelable("searchFlight");
+
+        FlightsSearchAsync asyncTask = new FlightsSearchAsync();
+        asyncTask.delegate = FlightsRecyclerActivity.this;
+        asyncTask.execute(searchFlight.getOrigin(),
+                searchFlight.getDestination(),
+                searchFlight.getDeparture(),
+                searchFlight.getReturnDate(),
+                searchFlight.getAdults(),
+                searchFlight.getChildren(),
+                searchFlight.getInfants(),
+                searchFlight.getTravel_class(),
+                searchFlight.getOneWay());
 
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
-        mAdapter = new FlightsAdapter(data);
 
         // LinearLayoutManager is used here, this will layout the elements in a similar fashion
         // to the way ListView would layout elements. The RecyclerView.LayoutManager defines how
@@ -35,20 +45,8 @@ public class FlightsRecyclerActivity extends AppCompatActivity {
 
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        mRecyclerView.setAdapter(mAdapter);
-
-        initializeData();
-        mAdapter.notifyDataSetChanged();
 
     }
-
-    private void initializeData() {
-        //Here we should add an async task
-        for(int i= 0; i<data.length; i++){
-            data[i]= "Flight Number: "+i;
-        }
-    }
-
 
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
@@ -56,16 +54,11 @@ public class FlightsRecyclerActivity extends AppCompatActivity {
         super.onSaveInstanceState(savedInstanceState);
     }
 
-
-    public void process_Finish(Flight[] flights) {
-        ArrayAdapter<String> adapterSearch;
-
-        String[] tempStrings = new String[flights.length];
-        for(int i = 0; i< flights.length;i++){
-            tempStrings[i] = flights[i].getPrice();
-        }
-
-        //mAdapter = new FlightsAdapter(tempStrings);
+    @Override
+    public void processFinish(Flight[] flights) {
+        Log.d(TAG,"Finished Downloading the Flights and setting the adapter");
+        FlightsAdapter newAdapter = new FlightsAdapter(flights);
+        mRecyclerView.setAdapter(newAdapter);
 
     }
 

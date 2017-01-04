@@ -28,11 +28,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 
 
 public class MainActivity extends AppCompatActivity implements AsyncResponse {
@@ -118,9 +114,7 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
                 //Async Task for Flights
                 getInfoForFlightSearchAsync();
 
-                //Goes to Second Activity
-                Intent intent = new Intent(getApplicationContext(), FlightsRecyclerActivity.class);
-                startActivity(intent);
+
             }
         });
     }
@@ -160,7 +154,6 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
         }else if (travel_class.equals("First Class")){
             travel_class = "FIRST";
         }
-
         //One way or Round trip ??? If it is One Way then......
         RadioButton oneWayButton = (RadioButton) findViewById(R.id.one_way_button);
         String oneWay = "false";
@@ -168,13 +161,22 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
             oneWay = "true";
         }
 
+        SearchFlight searchFlight = new SearchFlight(
+                origin,destination,departure,returndate,adults,children,infants,travel_class,oneWay);
+
+
+        //Goes to Second Activity
+        Intent intent = new Intent(getApplicationContext(), FlightsRecyclerActivity.class);
+        intent.putExtra("searchFlight", searchFlight);
+        startActivity(intent);
+        /*
         //Async Task
         FlightsSearchAsync asyncTask = new FlightsSearchAsync();
         asyncTask.delegate = MainActivity.this;
         asyncTask.execute(origin,
                 destination,departure,returndate,adults,children,infants,travel_class,oneWay);
 
-
+*/
     }
 
 

@@ -14,7 +14,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-import static com.aresproductions.flightbookingapp.BuildConfig.OPEN_WEATHER_MAP_API_KEY;
+import static com.aresproductions.flightbookingapp.BuildConfig.AmadeusApiKey;
 
 /**
  * Created by Ares on 28-Dec-16.
@@ -63,7 +63,7 @@ public class AirportAutocompleteAsync extends AsyncTask<String, Void, Airport[]>
             final String apiKeyParam = "apikey";
 
             Uri builtUri = Uri.parse(baseUrl).buildUpon()
-                    .appendQueryParameter(apiKeyParam, OPEN_WEATHER_MAP_API_KEY)
+                    .appendQueryParameter(apiKeyParam, AmadeusApiKey)
                     .appendQueryParameter(queryParamTerm, strings[0])
                     .build();
 

@@ -6,6 +6,7 @@ import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -14,7 +15,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-import static com.aresproductions.flightbookingapp.BuildConfig.OPEN_WEATHER_MAP_API_KEY;
+import static com.aresproductions.flightbookingapp.BuildConfig.AmadeusApiKey;
 
 /**
  * Created by GIANNIS on 03-Jan-17.
@@ -25,12 +26,12 @@ public class FlightsSearchAsync extends AsyncTask<String, Void, Flight[]> {
     private final String LOG_TAG = FlightsSearchAsync.class.getSimpleName();
 
 
-    public AsyncResponse delegate = null;
+    public AsyncResponseFlight delegate = null;
 
 
     @Override
     protected void onPostExecute(Flight[] flights) {
-        //delegate.process_Finish(flights);
+        delegate.processFinish(flights);
     }
 
 
@@ -68,7 +69,7 @@ public class FlightsSearchAsync extends AsyncTask<String, Void, Flight[]> {
             final String apiKeyParam = "apikey";
 
             Uri builtUri = Uri.parse(baseUrl).buildUpon()
-                    .appendQueryParameter(apiKeyParam, OPEN_WEATHER_MAP_API_KEY)
+                    .appendQueryParameter(apiKeyParam, AmadeusApiKey)
                     .appendQueryParameter(queryParamOrigin, strings[0])
                     .appendQueryParameter(queryParamDestination, strings[1])
                     .appendQueryParameter(queryParamDeparture, strings[2])
@@ -82,7 +83,7 @@ public class FlightsSearchAsync extends AsyncTask<String, Void, Flight[]> {
             //If we have One Way trip then this is our link
             if (strings[8].equals("true")){
                 builtUri = Uri.parse(baseUrl).buildUpon()
-                        .appendQueryParameter(apiKeyParam, OPEN_WEATHER_MAP_API_KEY)
+                        .appendQueryParameter(apiKeyParam, AmadeusApiKey)
                         .appendQueryParameter(queryParamOrigin, strings[0])
                         .appendQueryParameter(queryParamDestination, strings[1])
                         .appendQueryParameter(queryParamDeparture, strings[2])
@@ -163,20 +164,40 @@ public class FlightsSearchAsync extends AsyncTask<String, Void, Flight[]> {
         final String FLIGHT_CLASS = "travel_class";
         final String FLIGHT_PRICE = "total_price";
 
-        JSONArray flightsJsonArray = new JSONArray(flightsJsonStr);
-        Flight[] resultsFlights = new Flight[flightsJsonArray.length()];
 
-        for (int i = 0; i < flightsJsonArray.length(); i++) {
-            resultsFlights[i] = new Flight(flightsJsonArray.getJSONObject(i).getString(FLIGHT_CURRENCY),
-                    flightsJsonArray.getJSONObject(i).getString(FLIGHT_ORIGIN),
-                    flightsJsonArray.getJSONObject(i).getString(FLIGHT_DESTINATION),
-                    flightsJsonArray.getJSONObject(i).getString(FLIGHT_AIRLINE),
-                    flightsJsonArray.getJSONObject(i).getString(FLIGHT_CLASS),
-                    flightsJsonArray.getJSONObject(i).getString(FLIGHT_PRICE));
+        JSONObject flightsJson = new JSONObject(flightsJsonStr);
+        JSONArray flightsJsonArray = flightsJson.getJSONArray("results");
 
+        Flight[] searchedFlights = new Flight[flightsJson.length()];
+
+
+        for(int i = 0; i < flightsJson.length(); i++) {
+
+            // Get the JSON object representing the itineraries
+            JSONObject startObject = flightsJsonArray.getJSONObject(i);
+            JSONObject itineraries = startObject.getJSONArray("itineraries").getJSONObject(0);
+            JSONObject outbound = itineraries.getJSONObject("outbound");
+            JSONArray flightsArray  = outbound.getJSONArray("flights");
+
+            JSONObject fareArray  = startObject.getJSONObject("fare");
+
+            Log.d("departs_at",flightsArray.getJSONObject(0).getString("departs_at"));
+            Log.d("arrives_at",flightsArray.getJSONObject(0).getString("arrives_at"));
+            //Log.d(FLIGHT_DESTINATION,flightsArray.getJSONObject(0).getString(FLIGHT_DESTINATION));
+            //Log.d("marketing_airline",flightsArray.getJSONObject(0).getString("marketing_airline"));
+            //Log.d("total_price",fareArray.getString("total_price"));
+
+            searchedFlights[i] = new Flight("USD",
+                    flightsArray.getJSONObject(0).getString("departs_at"),
+                    flightsArray.getJSONObject(0).getString("arrives_at"),
+                    flightsArray.getJSONObject(0).getString("marketing_airline"),
+                    flightsArray.getJSONObject(0).getString("marketing_airline"),
+                    fareArray.getString("total_price"));
         }
 
-        return resultsFlights;
+
+
+        return searchedFlights;
 
     }
 

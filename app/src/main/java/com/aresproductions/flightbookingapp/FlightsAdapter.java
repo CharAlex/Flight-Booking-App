@@ -29,8 +29,7 @@ import android.widget.TextView;
 public class FlightsAdapter extends RecyclerView.Adapter<FlightsAdapter.ViewHolder> {
     private static final String TAG = "FlightsAdapter";
 
-    private String[] mDataSet; //data that we will show...
-
+    private Flight[] flightsData;
     /**
      * Provide a reference to the type of views that you are using (custom ViewHolder)
      */
@@ -57,10 +56,11 @@ public class FlightsAdapter extends RecyclerView.Adapter<FlightsAdapter.ViewHold
     /**
      * Initialize the dataset of the Adapter.
      *
-     * @param dataSet String[] containing the data to populate views to be used by RecyclerView.
+     * @param flightsData Flight[] containing the data to populate views to be used by RecyclerView.
      */
-    public FlightsAdapter(String[] dataSet) {
-        mDataSet = dataSet;
+    public FlightsAdapter(Flight[] flightsData) {
+        Log.d("Length", flightsData.length + "");
+        this.flightsData = flightsData;
     }
 
     // Create new views (invoked by the layout manager)
@@ -80,12 +80,13 @@ public class FlightsAdapter extends RecyclerView.Adapter<FlightsAdapter.ViewHold
 
         // Get element from your dataset at this position and replace the contents of the view
         // with that element
-        viewHolder.getTextView().setText(mDataSet[position]);
+        viewHolder.getTextView().setText(flightsData[position].getPrice());
     }
 
     // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
-        return mDataSet.length;
+        return flightsData.length;
     }
+
 }
