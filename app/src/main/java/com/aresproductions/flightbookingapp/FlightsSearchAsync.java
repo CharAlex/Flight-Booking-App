@@ -14,6 +14,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 
 import static com.aresproductions.flightbookingapp.BuildConfig.AmadeusApiKey;
 
@@ -81,7 +82,7 @@ public class FlightsSearchAsync extends AsyncTask<String, Void, Flight[]> {
                     .build();
 
             //If we have One Way trip then this is our link
-            if (strings[8].equals("true")){
+            if (strings[8].equals("true")) {
                 builtUri = Uri.parse(baseUrl).buildUpon()
                         .appendQueryParameter(apiKeyParam, AmadeusApiKey)
                         .appendQueryParameter(queryParamOrigin, strings[0])
@@ -93,6 +94,8 @@ public class FlightsSearchAsync extends AsyncTask<String, Void, Flight[]> {
                         .appendQueryParameter(queryParamClass, strings[7])
                         .build();
             }
+
+            Log.d("Roundtrip", strings[8]);
 
 
             URL url = new URL(builtUri.toString());
@@ -144,7 +147,7 @@ public class FlightsSearchAsync extends AsyncTask<String, Void, Flight[]> {
             }
         }
         try {
-            return getFlightsDataFromJson(flightsJsonStr);
+            return getFlightsDataFromJson(flightsJsonStr, strings[8]);
         } catch (JSONException e) {
             Log.e(LOG_TAG, e.getMessage(), e);
             e.printStackTrace();
@@ -155,7 +158,7 @@ public class FlightsSearchAsync extends AsyncTask<String, Void, Flight[]> {
     }
 
     //Processing Data from JSON File
-    private Flight[] getFlightsDataFromJson(String flightsJsonStr) throws JSONException {
+    private Flight[] getFlightsDataFromJson(String flightsJsonStr, String oneway) throws JSONException {
         // These are the names of the JSON objects that need to be extracted.
         final String FLIGHT_CURRENCY = "currency";
         final String FLIGHT_ORIGIN = "origin";
@@ -171,30 +174,75 @@ public class FlightsSearchAsync extends AsyncTask<String, Void, Flight[]> {
         Flight[] searchedFlights = new Flight[flightsJson.length()];
 
 
-        for(int i = 0; i < flightsJson.length(); i++) {
+        for (int i = 0; i < flightsJson.length(); i++) {
 
             // Get the JSON object representing the itineraries
             JSONObject startObject = flightsJsonArray.getJSONObject(i);
             JSONObject itineraries = startObject.getJSONArray("itineraries").getJSONObject(0);
             JSONObject outbound = itineraries.getJSONObject("outbound");
-            JSONArray flightsArray  = outbound.getJSONArray("flights");
+            JSONArray flightsArray = outbound.getJSONArray("flights");
 
-            JSONObject fareArray  = startObject.getJSONObject("fare");
+            //JSONObject flight
 
-            Log.d("departs_at",flightsArray.getJSONObject(0).getString("departs_at"));
-            Log.d("arrives_at",flightsArray.getJSONObject(0).getString("arrives_at"));
+            ArrayList<Trip> tempTripsOutbound = new ArrayList<>();
+
+            for (int j = 0; j < flightsArray.length(); j++) {
+                JSONObject airportOrigin = flightsArray.getJSONObject(j).getJSONObject("origin");
+                JSONObject airportDestination = flightsArray.getJSONObject(j).getJSONObject("destination");
+                tempTripsOutbound.add(new Trip(flightsArray.getJSONObject(j).getString("departs_at"),
+                        flightsArray.getJSONObject(j).getString("arrives_at"),
+                        airportOrigin.getString("airport"),
+                        airportDestination.getString("airport")));
+
+
+                //Log.d("Origin airport: ", airportOrigin.getString("airport"));
+                //Log.d("Destination airport: ", airportDestination.getString("airport"));
+                //Log.d("departs_at",flightsArray.getJSONObject(j).getString("departs_at"));
+            }
+            JSONObject fareArray = startObject.getJSONObject("fare");
+
+
             //Log.d(FLIGHT_DESTINATION,flightsArray.getJSONObject(0).getString(FLIGHT_DESTINATION));
             //Log.d("marketing_airline",flightsArray.getJSONObject(0).getString("marketing_airline"));
             //Log.d("total_price",fareArray.getString("total_price"));
+            //Flight(String currency, String origin, String destination, String airline, String travelClass, String departs_at, String arrives_at, String price)
 
-            searchedFlights[i] = new Flight("USD",
-                    flightsArray.getJSONObject(0).getString("departs_at"),
-                    flightsArray.getJSONObject(0).getString("arrives_at"),
-                    flightsArray.getJSONObject(0).getString("marketing_airline"),
-                    flightsArray.getJSONObject(0).getString("marketing_airline"),
-                    fareArray.getString("total_price"));
+            ArrayList<Trip> tempTripsInbound = new ArrayList<>();
+            if (oneway.equals("false")) {
+                Log.d("Roundtrip", "true");
+
+                for (int j = 0; j < flightsArray.length(); j++) {
+                    JSONObject airportOrigin = flightsArray.getJSONObject(j).getJSONObject("origin");
+                    JSONObject airportDestination = flightsArray.getJSONObject(j).getJSONObject("destination");
+                    tempTripsInbound.add(new Trip(flightsArray.getJSONObject(j).getString("departs_at"),
+                            flightsArray.getJSONObject(j).getString("arrives_at"),
+                            airportOrigin.getString("airport"),
+                            airportDestination.getString("airport")));
+                }
+            }
+
+
+            if (oneway.equals("false")) {
+                searchedFlights[i] = new FlightRoundTrip("USD",
+                        tempTripsOutbound.get(0).getDepart_airport(),
+                        tempTripsOutbound.get(tempTripsOutbound.size() - 1).getArrival_airport(),
+                        flightsArray.getJSONObject(0).getString("marketing_airline"),
+                        "travel_class",
+                        tempTripsOutbound,
+                        fareArray.getString("total_price"),
+                        tempTripsInbound);
+            } else {
+                searchedFlights[i] = new Flight("USD",
+                        tempTripsOutbound.get(0).getDepart_airport(),
+                        tempTripsOutbound.get(tempTripsOutbound.size() - 1).getArrival_airport(),
+                        flightsArray.getJSONObject(0).getString("marketing_airline"),
+                        "travel_class",
+                        tempTripsOutbound,
+                        fareArray.getString("total_price"));
+            }
+
+
         }
-
 
 
         return searchedFlights;

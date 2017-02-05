@@ -58,16 +58,16 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        if(!isConnectedToInternet(getBaseContext())){
+        if (!isConnectedToInternet(getBaseContext())) {
             showCloseDialog();
         }
 
         showCalendars();
         //Get the entries for spinners
-        setSpinnerData(R.id.spinner1,R.array.travel_class);
-        setSpinnerData(R.id.spinner_adult,R.array.num_of_adults);
-        setSpinnerData(R.id.spinner_children,R.array.num_of_passengers);
-        setSpinnerData(R.id.spinner_infant,R.array.num_of_passengers);
+        setSpinnerData(R.id.spinner1, R.array.travel_class);
+        setSpinnerData(R.id.spinner_adult, R.array.num_of_adults);
+        setSpinnerData(R.id.spinner_children, R.array.num_of_passengers);
+        setSpinnerData(R.id.spinner_infant, R.array.num_of_passengers);
 
         //Autocomplete Functionality
         setupAutocompleteTextViews();
@@ -113,24 +113,22 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
             public void onClick(View view) {
                 //Async Task for Flights
                 getInfoForFlightSearchAsync();
-
-
             }
         });
     }
 
-    public void getInfoForFlightSearchAsync(){
+    public void getInfoForFlightSearchAsync() {
 
         //Get values from AutoComplete texts
-        String origin = departureAutoComplete.getText().toString().substring(departureAutoComplete.getText().length()-4,departureAutoComplete.getText().length()-1);
-        String destination = destinationAutoComplete.getText().toString().substring(destinationAutoComplete.getText().length()-4,destinationAutoComplete.getText().length()-1);
+        String origin = departureAutoComplete.getText().toString().substring(departureAutoComplete.getText().length() - 4, departureAutoComplete.getText().length() - 1);
+        String destination = destinationAutoComplete.getText().toString().substring(destinationAutoComplete.getText().length() - 4, destinationAutoComplete.getText().length() - 1);
 
         //Get values from calendars
         String departure = departureDateText.getText().toString();
-        departure = departure.substring(6,10)+ "-" + departure.substring(3,5)+ "-" + departure.substring(0,2) ;
+        departure = departure.substring(6, 10) + "-" + departure.substring(3, 5) + "-" + departure.substring(0, 2);
 
         String returndate = arrivalDateText.getText().toString();
-        returndate =  returndate.substring(6,10)+ "-" + returndate.substring(3,5)+ "-" + returndate.substring(0,2) ;
+        returndate = returndate.substring(6, 10) + "-" + returndate.substring(3, 5) + "-" + returndate.substring(0, 2);
 
         //Get values from spinners
         Spinner spinnerAdults = (Spinner) findViewById(R.id.spinner_adult);
@@ -145,24 +143,25 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
         Spinner spinnerClass = (Spinner) findViewById(R.id.spinner1);
         String travel_class = spinnerClass.getSelectedItem().toString();
 
-        if(travel_class.equals("Economy")){
+        if (travel_class.equals("Economy")) {
             travel_class = "ECONOMY";
-        }else if (travel_class.equals("Premium Economy")){
+        } else if (travel_class.equals("Premium Economy")) {
             travel_class = "PREMIUM_ECONOMY";
-        }else if (travel_class.equals("Business Class")){
+        } else if (travel_class.equals("Business Class")) {
             travel_class = "BUSINESS";
-        }else if (travel_class.equals("First Class")){
+        } else if (travel_class.equals("First Class")) {
             travel_class = "FIRST";
         }
+
         //One way or Round trip ??? If it is One Way then......
         RadioButton oneWayButton = (RadioButton) findViewById(R.id.one_way_button);
         String oneWay = "false";
-        if(oneWayButton.isChecked()){
+        if (oneWayButton.isChecked()) {
             oneWay = "true";
         }
 
         SearchFlight searchFlight = new SearchFlight(
-                origin,destination,departure,returndate,adults,children,infants,travel_class,oneWay);
+                origin, destination, departure, returndate, adults, children, infants, travel_class, oneWay);
 
 
         //Goes to Second Activity
@@ -180,22 +179,24 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
     }
 
 
-    private void setupAutocompleteTextViews(){
+    private void setupAutocompleteTextViews() {
         departureAutoComplete = (AutoCompleteTextView) findViewById(R.id.search_departure);
         departureAutoComplete.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
             }
+
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
-                if(!departureAutoComplete.getText().toString().equals("")){
+                if (!departureAutoComplete.getText().toString().equals("")) {
                     AirportAutocompleteAsync asyncTask = new AirportAutocompleteAsync();
                     asyncTask.delegate = MainActivity.this;
                     asyncTask.execute(departureAutoComplete.getText().toString());
                 }
             }
+
             @Override
             public void afterTextChanged(Editable editable) {
 
@@ -208,15 +209,17 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
             }
+
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
-                if(!destinationAutoComplete.getText().toString().equals("")){
+                if (!destinationAutoComplete.getText().toString().equals("")) {
                     AirportAutocompleteAsync asyncTask = new AirportAutocompleteAsync();
                     asyncTask.delegate = MainActivity.this;
                     asyncTask.execute(destinationAutoComplete.getText().toString());
                 }
             }
+
             @Override
             public void afterTextChanged(Editable editable) {
 
@@ -224,11 +227,11 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
         });
     }
 
-    public void showDialogOnLayoutClick(){
+    public void showDialogOnLayoutClick() {
         departure = (LinearLayout) findViewById(R.id.departure_date_view);
         arrival = (LinearLayout) findViewById(R.id.arrive_date_view);
         departure.setOnClickListener(
-                new View.OnClickListener(){
+                new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         isDeparture = true;
@@ -238,7 +241,7 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
         );
 
         arrival.setOnClickListener(
-                new View.OnClickListener(){
+                new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         isDeparture = false;
@@ -250,43 +253,43 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
 
     @Override
     protected Dialog onCreateDialog(int id) {
-        DatePickerDialog picker = new DatePickerDialog(this,datePickerListener,year_x, month_x, day_x);
-        picker.getDatePicker().setMinDate(System.currentTimeMillis()-1000);
+        DatePickerDialog picker = new DatePickerDialog(this, datePickerListener, year_x, month_x, day_x);
+        picker.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
 
-        if (id==DIALOG_ID)
+        if (id == DIALOG_ID)
             return picker;
         return null;
     }
 
-    private DatePickerDialog.OnDateSetListener datePickerListener = new DatePickerDialog.OnDateSetListener(){
+    private DatePickerDialog.OnDateSetListener datePickerListener = new DatePickerDialog.OnDateSetListener() {
 
         public void onDateSet(DatePicker view, int year, int month, int day) {
             year_x = year;
-            month_x = month+1;
+            month_x = month + 1;
             day_x = day;
             String date;
 
-            if(month_x<10 && day_x<10){
-                date = "0"+day_x + "/" + "0"+month_x + "/" + year_x;
-            }else if(month_x<10){
-                date = day_x + "/" + "0"+month_x + "/" + year_x;
-            }else if(day_x<10){
-                date = "0"+day_x + "/" + month_x + "/" + year_x;
-            }else{
+            if (month_x < 10 && day_x < 10) {
+                date = "0" + day_x + "/" + "0" + month_x + "/" + year_x;
+            } else if (month_x < 10) {
+                date = day_x + "/" + "0" + month_x + "/" + year_x;
+            } else if (day_x < 10) {
+                date = "0" + day_x + "/" + month_x + "/" + year_x;
+            } else {
                 date = day_x + "/" + month_x + "/" + year_x;
             }
 
-            if(isDeparture){
+            if (isDeparture) {
                 departureDateText.setText(date);
-            }else{
+            } else {
                 arrivalDateText.setText(date);
             }
-            Toast.makeText(MainActivity.this,date,Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this, date, Toast.LENGTH_SHORT).show();
         }
 
     };
 
-    public void showCalendars(){
+    public void showCalendars() {
         departureDateText = (TextView) findViewById(R.id.departure_text);
         arrivalDateText = (TextView) findViewById(R.id.arrival_text);
 
@@ -297,14 +300,14 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
 
         //Show the current date
         String date;
-        if(month_x<9 && day_x<10){
-            date = "0"+day_x + "/" + "0"+ (month_x+1) + "/" + year_x;
-        }else if(month_x<9){
-            date = day_x + "/" + "0"+ (month_x+1) + "/" + year_x;
-        }else if(day_x<10){
-            date = "0"+day_x + "/" +  (month_x+1) + "/" + year_x;
-        }else{
-            date = day_x + "/" +  (month_x+1) + "/" + year_x;
+        if (month_x < 9 && day_x < 10) {
+            date = "0" + day_x + "/" + "0" + (month_x + 1) + "/" + year_x;
+        } else if (month_x < 9) {
+            date = day_x + "/" + "0" + (month_x + 1) + "/" + year_x;
+        } else if (day_x < 10) {
+            date = "0" + day_x + "/" + (month_x + 1) + "/" + year_x;
+        } else {
+            date = day_x + "/" + (month_x + 1) + "/" + year_x;
         }
         departureDateText.setText(date);
         arrivalDateText.setText(date);
@@ -312,7 +315,7 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
         showDialogOnLayoutClick();
     }
 
-    public void setSpinnerData(int spinner_id, int array_name){
+    public void setSpinnerData(int spinner_id, int array_name) {
         Spinner spinner = (Spinner) findViewById(spinner_id);
         // Create an ArrayAdapter using the string array and a default spinner layout
 
@@ -325,7 +328,7 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
         spinner.setAdapter(adapter);
     }
 
-    public void swapButton(){
+    public void swapButton() {
         final Button swap_button = (Button) findViewById(R.id.swap_button);
         swap_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -340,7 +343,7 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
         });
     }
 
-    public void oneWayOrRoundTrip(){
+    public void oneWayOrRoundTrip() {
         final RadioButton oneWayButton = (RadioButton) findViewById(R.id.one_way_button);
         final RadioButton roundTripButton = (RadioButton) findViewById(R.id.round_trip_button);
         final View divider = findViewById(R.id.calendar_divider);
@@ -353,11 +356,11 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
                 divider.setVisibility(View.INVISIBLE);
 
                 CardView temp_cardview = (CardView) findViewById(R.id.calendar_cardview);
-                departure.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,temp_cardview.getHeight()));
-                departure.setPadding(0,0,0,18);
+                departure.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, temp_cardview.getHeight()));
+                departure.setPadding(0, 0, 0, 18);
                 departure.setGravity(Gravity.CENTER);
-                LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,temp_cardview.getHeight());
-                param.setMargins(0,16,0,0);
+                LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, temp_cardview.getHeight());
+                param.setMargins(0, 16, 0, 0);
                 temp_cardview.setLayoutParams(param);
             }
         });
@@ -369,10 +372,10 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
                 oneWayButton.setChecked(false);
                 roundTripButton.setChecked(true);
                 arrival.setVisibility(View.VISIBLE);
-                departure.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,arrival.getHeight(),1));
-                departure.setPadding(0,0,0,0);
+                departure.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, arrival.getHeight(), 1));
+                departure.setPadding(0, 0, 0, 0);
                 divider.setVisibility(View.VISIBLE);
-                arrival.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,arrival.getHeight(),1));
+                arrival.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, arrival.getHeight(), 1));
             }
         });
 
@@ -405,7 +408,7 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
         ArrayAdapter<String> adapterSearch;
 
         String[] tempStrings = new String[airports.length];
-        for(int i = 0; i< airports.length;i++){
+        for (int i = 0; i < airports.length; i++) {
             tempStrings[i] = airports[i].getLabel();
         }
 

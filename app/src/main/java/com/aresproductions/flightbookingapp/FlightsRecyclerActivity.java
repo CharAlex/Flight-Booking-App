@@ -8,7 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 
-public class FlightsRecyclerActivity extends AppCompatActivity implements  AsyncResponseFlight{
+public class FlightsRecyclerActivity extends AppCompatActivity implements AsyncResponseFlight {
 
     private static final String TAG = "FlightsRecyclerActivity";
 
@@ -56,7 +56,7 @@ public class FlightsRecyclerActivity extends AppCompatActivity implements  Async
 
     @Override
     public void processFinish(Flight[] flights) {
-        Log.d(TAG,"Finished Downloading the Flights and setting the adapter");
+        Log.d(TAG, "Finished Downloading the Flights and setting the adapter");
         FlightsAdapter newAdapter = new FlightsAdapter(flights);
         mRecyclerView.setAdapter(newAdapter);
 

@@ -20,7 +20,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/textViewID"
+            android:id="@+id/total_price"
             android:text="125$"
             android:textColor="#FFFFFF"
             android:textStyle="bold"
@@ -59,6 +59,7 @@
                 android:padding="8dp">
 
                 <TextView
+                    android:id="@+id/departure_city"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="SKG"
@@ -69,6 +70,7 @@
                     />
 
                     <TextView
+                        android:id="@+id/stops"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:text="Non-stop"
@@ -81,6 +83,7 @@
 
 
                 <TextView
+                    android:id="@+id/arrival_city"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="LCY"
@@ -100,6 +103,7 @@
                 android:layout_marginRight="24dp"/>
 
             <TextView
+                android:id="@+id/trip_time"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -124,6 +128,7 @@
             android:layout_weight="2"
             android:layout_height="match_parent">
             <TextView
+                android:id="@+id/trip_length"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text="1h 35m"
