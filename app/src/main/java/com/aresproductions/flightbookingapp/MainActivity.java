@@ -419,5 +419,23 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
         destinationAutoComplete.setAdapter(adapterSearch);
         adapterSearch.notifyDataSetChanged();
     }
+
+    @Override
+    public void onBackPressed() {
+
+        new AlertDialog.Builder(this)
+                .setTitle("Close App")
+                .setMessage("Do you wanna close the App?")
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                    }
+
+                })
+                .setNegativeButton("No", null)
+                .show();
+
+    }
 }
 

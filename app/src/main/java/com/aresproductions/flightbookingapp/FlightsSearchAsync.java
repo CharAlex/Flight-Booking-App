@@ -129,7 +129,7 @@ public class FlightsSearchAsync extends AsyncTask<String, Void, Flight[]> {
                 return null;
             }
             flightsJsonStr = buffer.toString();
-            Log.v(LOG_TAG, "Flights JSON String: " + flightsJsonStr);
+            //Log.v(LOG_TAG, "Flights JSON String: " + flightsJsonStr);
         } catch (IOException e) {
             Log.e(LOG_TAG, "Error ", e);
             // If the code didn't successfully get the flights data, there's no point in attempting
@@ -201,8 +201,6 @@ public class FlightsSearchAsync extends AsyncTask<String, Void, Flight[]> {
 
             ArrayList<Trip> tempTripsInbound = new ArrayList<>();
             if (oneway.equals("false")) {
-                Log.d("Roundtrip", "true");
-
                 for (int j = 0; j < flightsArray.length(); j++) {
                     JSONObject airportOrigin = flightsArray.getJSONObject(j).getJSONObject("origin");
                     JSONObject airportDestination = flightsArray.getJSONObject(j).getJSONObject("destination");

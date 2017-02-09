@@ -1,18 +1,22 @@
 package com.aresproductions.flightbookingapp;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.ArrayList;
+
 
 /**
  * Created by GIANNIS on 03-Jan-17.
  */
 
-public class Flight {
+public class Flight implements Parcelable{
     private String currency;
     private String origin;
     private String destination;
     private String airline;
     private String travelClass;
-    private ArrayList<Trip> trips;
+    private ArrayList trips;
     private int numberOfTrips;
 
 
@@ -57,6 +61,46 @@ public class Flight {
         return price;
     }
 
+    public static final Creator<Flight> CREATOR = new Creator<Flight>() {
+        @Override
+        public Flight createFromParcel(Parcel in) {
+            return new Flight(in);
+        }
+
+        @Override
+        public Flight[] newArray(int size) {
+            return new Flight[size];
+        }
+    };
 
 
+
+    protected Flight(Parcel in) {
+        currency = in.readString();
+        origin = in.readString();
+        destination = in.readString();
+        airline = in.readString();
+        travelClass = in.readString();
+        price = in.readString();
+        trips = in.readArrayList(Trip.class.getClassLoader());
+
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(currency);
+        parcel.writeString(origin);
+        parcel.writeString(destination);
+        parcel.writeString(airline);
+        parcel.writeString(travelClass);
+        parcel.writeString(price);
+        parcel.writeList(trips);
+
+
+    }
 }

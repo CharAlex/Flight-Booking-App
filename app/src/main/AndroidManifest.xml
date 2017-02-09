@@ -27,6 +27,11 @@
             android:label="@string/title_activity_flights_recycler"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
+        <activity
+            android:name=".FlightDetailRecyclerActivity"
+            android:label="@string/title_activity_flight_detail_recycler"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
     </application>
 
 </manifest>

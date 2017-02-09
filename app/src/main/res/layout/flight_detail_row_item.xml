@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:orientation="horizontal"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:padding="4dp">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardUseCompatPadding="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/flight_row_layout"
+        >
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:id="@+id/main_layout"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/flight_company"
+                android:src="@drawable/aegean"
+                android:layout_gravity="center"
+                android:padding="4dp"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="#F3F4F4"
+                android:layout_marginLeft="4dp"
+                android:layout_marginRight="4dp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:orientation="horizontal"
+                android:padding="8dp">
+
+                <TextView
+                    android:id="@+id/departure_city"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="SKG"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="16dp"
+                    android:textAlignment="center"
+                    android:layout_weight="1"
+                    />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="----"
+                        android:layout_weight="1"
+                        android:textColor="#4CAF50"
+                        android:gravity="center"
+                        android:textSize="12dp"
+                        />
+
+
+
+                <TextView
+                    android:id="@+id/arrival_city"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="LCY"
+                    android:textAlignment="center"
+                    android:textSize="16dp"
+                    android:textColor="@color/colorBlack"
+                    android:layout_weight="1"
+                    />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="#F3F4F4"
+                android:layout_marginLeft="24dp"
+                android:layout_marginRight="24dp"/>
+
+            <TextView
+                android:id="@+id/trip_time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="8dp"
+                android:textColor="@color/colorBlack"
+                android:text="(16:25) - (18:00)"
+                android:layout_weight="1"/>
+
+        </LinearLayout>
+
+
+        <View
+            android:layout_width="2dp"
+            android:background="#FFEB3B"
+            android:layout_height="match_parent"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_weight="2"
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/trip_length"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="1h 35m"
+                android:textStyle="bold"
+                android:padding="4dp"
+                android:gravity="center"
+                android:textColor="@color/colorBlack"
+                android:textAlignment="center"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+</LinearLayout>

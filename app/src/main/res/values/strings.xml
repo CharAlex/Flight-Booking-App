@@ -25,7 +25,8 @@
         <item>5</item>
         <item>6</item>
     </string-array>
-    <string name="title_activity_flights_recycler">FlightsRecyclerActivity</string>
+    <string name="title_activity_flights_recycler">Available Flights</string>
     <string name="no_internet_title">No Internet Connection</string>
     <string name="no_internet_message">In order to use this Application you need Internet Connection.\nPlease connect to the Internet and try again.</string>
+    <string name="title_activity_flight_detail_recycler">Flight Details</string>
 </resources>
