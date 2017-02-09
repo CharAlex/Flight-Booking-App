@@ -26,7 +26,6 @@ public class Flight {
         this.travelClass = travelClass;
         this.trips = trips;
         this.price = price;
-
         this.numberOfTrips = trips.size();
     }
 

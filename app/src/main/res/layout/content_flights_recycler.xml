@@ -11,6 +11,8 @@
     tools:context="com.aresproductions.flightbookingapp.FlightsRecyclerActivity"
     tools:showIn="@layout/activity_flights_recycler">
 
+
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"

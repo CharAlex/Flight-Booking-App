@@ -109,6 +109,7 @@ public class FlightsSearchAsync extends AsyncTask<String, Void, Flight[]> {
             // Read the input stream into a String
             InputStream inputStream = urlConnection.getInputStream();
             StringBuffer buffer = new StringBuffer();
+
             if (inputStream == null) {
                 // Nothing to do.
                 return null;
@@ -159,22 +160,13 @@ public class FlightsSearchAsync extends AsyncTask<String, Void, Flight[]> {
 
     //Processing Data from JSON File
     private Flight[] getFlightsDataFromJson(String flightsJsonStr, String oneway) throws JSONException {
-        // These are the names of the JSON objects that need to be extracted.
-        final String FLIGHT_CURRENCY = "currency";
-        final String FLIGHT_ORIGIN = "origin";
-        final String FLIGHT_DESTINATION = "destination";
-        final String FLIGHT_AIRLINE = "operating_airline";
-        final String FLIGHT_CLASS = "travel_class";
-        final String FLIGHT_PRICE = "total_price";
-
-
         JSONObject flightsJson = new JSONObject(flightsJsonStr);
         JSONArray flightsJsonArray = flightsJson.getJSONArray("results");
 
-        Flight[] searchedFlights = new Flight[flightsJson.length()];
+        Flight[] searchedFlights = new Flight[flightsJsonArray.length()];
 
 
-        for (int i = 0; i < flightsJson.length(); i++) {
+        for (int i = 0; i < flightsJsonArray.length(); i++) {
 
             // Get the JSON object representing the itineraries
             JSONObject startObject = flightsJsonArray.getJSONObject(i);

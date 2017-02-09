@@ -42,7 +42,6 @@ public class FlightsRecyclerActivity extends AppCompatActivity implements AsyncR
         // to the way ListView would layout elements. The RecyclerView.LayoutManager defines how
         // elements are laid out.
         mLayoutManager = new LinearLayoutManager(getApplicationContext());
-
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
 

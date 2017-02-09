@@ -39,7 +39,7 @@ public class AirportAutocompleteAsync extends AsyncTask<String, Void, Airport[]>
 
     @Override
     protected Airport[] doInBackground(String... strings) {
-        Log.d("Json", "Process Started");
+        //Log.d("Json", "Process Started");
 
 
         //String still empty?
@@ -68,7 +68,7 @@ public class AirportAutocompleteAsync extends AsyncTask<String, Void, Airport[]>
                     .build();
 
             URL url = new URL(builtUri.toString());
-            Log.v(LOG_TAG, "Built URI: " + builtUri.toString());
+            //Log.v(LOG_TAG, "Built URI: " + builtUri.toString());
 
             // Create the request to Airport Autocomplete, and open the connection
 
@@ -99,7 +99,7 @@ public class AirportAutocompleteAsync extends AsyncTask<String, Void, Airport[]>
                 return null;
             }
             airportsJsonStr = buffer.toString();
-            Log.v(LOG_TAG, "Airport JSON String: " + airportsJsonStr);
+            //Log.v(LOG_TAG, "Airport JSON String: " + airportsJsonStr);
         } catch (IOException e) {
             Log.e(LOG_TAG, "Error ", e);
             // If the code didn't successfully get the airport data, there's no point in attempting
@@ -140,7 +140,6 @@ public class AirportAutocompleteAsync extends AsyncTask<String, Void, Airport[]>
 
         for (int i = 0; i < airportsJsonArray.length(); i++) {
             resultsAirports[i] = new Airport(airportsJsonArray.getJSONObject(i).getString(AIRPORT_LABEL), airportsJsonArray.getJSONObject(i).getString(AIRPORT_VALUE));
-
         }
 
         return resultsAirports;
