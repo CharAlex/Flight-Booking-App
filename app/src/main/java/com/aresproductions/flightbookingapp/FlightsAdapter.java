@@ -56,8 +56,6 @@ public class FlightsAdapter extends RecyclerView.Adapter<FlightsAdapter.ViewHold
                     Log.d(TAG, "Flight " + getPosition() + " clicked.");
 
                     Context context = v.getContext();
-                    context.startActivity(new Intent(context, FlightDetailRecyclerActivity.class));
-
                     Intent intent = new Intent(context, FlightDetailRecyclerActivity.class);
                     intent.putExtra("detailFlight", flightsData[getPosition()]);
                     context.startActivity(intent);
